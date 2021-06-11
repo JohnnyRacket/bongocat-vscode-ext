@@ -4,7 +4,7 @@
   "description": "Creates a bongo cat to code with you 🐱",
   "icon": "media/bongo_icon.png",
   "publisher": "JohnHarrison",
-  "version": "1.5.0",
+  "version": "1.4.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/JohnnyRacket/bongocat-vscode-ext"
@@ -33,7 +33,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "release-minor": "npm version minor"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
