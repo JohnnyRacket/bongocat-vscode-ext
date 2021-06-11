@@ -23,6 +23,9 @@ Users appreciate release notes as you update your extension.
 
 Initial release of Bongo Cat Buddy
 
+### 1.4.0
+
+HD upgrade of bongo cat visuals
 -----------------------------------------------------------------------------------------------------------
 
 **Enjoy!**
