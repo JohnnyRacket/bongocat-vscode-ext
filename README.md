@@ -2,6 +2,10 @@
 
 Bongo cat buddy creates a bongo cat to type along with you 🐱
 
+## Use
+
+Run the command `Bongo Cat` to create your bongo cat buddy!
+
 ## Features
 
 Bongo cat in a webview that types alongside you!
