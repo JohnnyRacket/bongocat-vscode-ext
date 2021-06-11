@@ -4,7 +4,7 @@
   "description": "Creates a bongo cat to code with you 🐱",
   "icon": "media/bongo_icon.png",
   "publisher": "JohnHarrison",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/JohnnyRacket/bongocat-vscode-ext"
