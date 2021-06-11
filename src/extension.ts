@@ -1,32 +1,47 @@
 import * as vscode from 'vscode';
 
-export function activate({ subscriptions, extensionUri, extensionPath }: vscode.ExtensionContext) {
+export function activate({ subscriptions, extensionUri }: vscode.ExtensionContext) {
 
 	subscriptions.push(
-		vscode.commands.registerCommand('bongocat-buddy.bongoCat', () => { })
-	);
-	// make web panel in panel 2 for bongo cat friend
-	const panel = vscode.window.createWebviewPanel(
-		'bongoCat',
-		'Bongo Cat',
-		vscode.ViewColumn.Two,
-		{ enableScripts: true }
-	);
-	// get its frame paths
-	const bongoRightPath = vscode.Uri.joinPath(extensionUri, 'media', 'bongo_right.png');
-	const bongoRightUri = panel.webview.asWebviewUri(bongoRightPath);
-	const bongoLeftPath = vscode.Uri.joinPath(extensionUri, 'media', 'bongo_left.png');
-	const bongoLeftUri = panel.webview.asWebviewUri(bongoLeftPath);
-	const bongoMiddlePath = vscode.Uri.joinPath(extensionUri, 'media', 'bongo_middle.png');
-	const bongoMiddleUri = panel.webview.asWebviewUri(bongoMiddlePath);
+		vscode.commands.registerCommand('bongocat-buddy.bongoCat', () => {
+			// make web panel in panel 2 for bongo cat friend
+			const panel = vscode.window.createWebviewPanel(
+				'bongoCat',
+				'Bongo Cat',
+				vscode.ViewColumn.Two,
+				{ enableScripts: true }
+			);
+			// get its frame paths
+			const bongoRightPath = vscode.Uri.joinPath(extensionUri, 'media', 'bongo_right.png');
+			const bongoRightUri = panel.webview.asWebviewUri(bongoRightPath);
+			const bongoLeftPath = vscode.Uri.joinPath(extensionUri, 'media', 'bongo_left.png');
+			const bongoLeftUri = panel.webview.asWebviewUri(bongoLeftPath);
+			const bongoMiddlePath = vscode.Uri.joinPath(extensionUri, 'media', 'bongo_middle.png');
+			const bongoMiddleUri = panel.webview.asWebviewUri(bongoMiddlePath);
 
-	const bongoFrameGenerator = getBongoState();
-	// set the html content with the resolved paths
-	panel.webview.html = getWebviewContent(bongoLeftUri, bongoRightUri, bongoMiddleUri);
-	// trigger the animation on the typing event, but still trigger default type command
-	subscriptions.push(
-		vscode.commands.registerCommand('type', (...args) => { panel.webview.postMessage(bongoFrameGenerator.next().value); return vscode.commands.executeCommand('default:type', ...args); })
+			const bongoFrameGenerator = getBongoState();
+			// set the html content with the resolved paths
+			panel.webview.html = getWebviewContent(bongoLeftUri, bongoRightUri, bongoMiddleUri);
+
+			// trigger the animation on the typing event, but still trigger default type command
+			let typeCommand = vscode.commands.registerCommand('type', (...args) => {
+				panel.webview.postMessage(bongoFrameGenerator.next().value);
+				return vscode.commands.executeCommand('default:type', ...args);
+			});
+			subscriptions.push(typeCommand);
+
+			//set up dispose
+			panel.onDidDispose(
+				() => {
+					typeCommand.dispose();
+				},
+				null,
+				subscriptions
+			);
+
+		})
 	);
+
 }
 
 function getWebviewContent(bongoLeftUri: vscode.Uri, bongoRightUri: vscode.Uri, bongoMiddleUri: vscode.Uri) {
@@ -62,7 +77,7 @@ function getWebviewContent(bongoLeftUri: vscode.Uri, bongoRightUri: vscode.Uri, 
 					bongoLeft.hidden = true;
 					bongoRight.hidden = false;
 				}
-				timeout = setTimeout(() => {bongoLeft.hidden = true; bongoRight.hidden = true; bongoMiddle.hidden = false; }, 250);
+				timeout = setTimeout(() => {bongoLeft.hidden = true; bongoRight.hidden = true; bongoMiddle.hidden = false; }, 200);
 			});
 		</script>
 	</html>`;
