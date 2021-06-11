@@ -1,8 +1,9 @@
 {
   "name": "bongocat-buddy",
-  "displayName": "bongocat-buddy",
-  "description": "Puts bongo cat in your status bar to code with you.",
-  "version": "0.0.1",
+  "displayName": "Bongo Cat Buddy",
+  "description": "Creates a bongo cat to code with you 🐱",
+  "icon": "media/bongo_icon.png",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.57.0"
   },
