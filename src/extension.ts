@@ -24,7 +24,7 @@ export function activate({ subscriptions, extensionUri }: vscode.ExtensionContex
 			panel.webview.html = getWebviewContent(bongoLeftUri, bongoRightUri, bongoMiddleUri);
 
 			// trigger the animation on the typing event, but still trigger default type command
-			let typeCommand = vscode.commands.registerCommand('type', (...args) => {
+			let typeCommand = vscode.commands.registerCommand('bongocat-buddy.bongoType', (...args) => {
 				panel.webview.postMessage(bongoFrameGenerator.next().value);
 				return vscode.commands.executeCommand('default:type', ...args);
 			});
